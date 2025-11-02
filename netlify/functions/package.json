@@ -1,0 +1,22 @@
+{
+  "name": "getron-api-functions",
+  "version": "1.0.0",
+  "description": "Netlify Functions for Getron Ultimate AI Platform",
+  "main": "api.js",
+  "scripts": {
+    "build": "echo 'No build needed for Netlify Functions'",
+    "test": "echo 'Tests not implemented yet'"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "node-fetch": "^3.3.0"
+  },
+  "keywords": [
+    "netlify",
+    "serverless",
+    "getron",
+    "ai-platform"
+  ],
+  "author": "MiniMax Agent",
+  "license": "MIT"
+}

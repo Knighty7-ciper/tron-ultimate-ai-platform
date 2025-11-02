@@ -1,4 +1,7 @@
 [build]
+  # Build command for Getron platform - try multiple paths
+  command = "if [ -d frontend ]; then cd frontend && npm install && npm run build; elif [ -d src ]; then npm install && npm run build; else echo 'No frontend directory found'; fi"
+  
   # Publish directory - Next.js static export output
   publish = "frontend/out"
   
