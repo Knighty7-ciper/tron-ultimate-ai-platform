@@ -21,7 +21,22 @@
 # API routes to Netlify Functions
 [[redirects]]
   from = "/api/health"
-  to = "/.netlify/functions/api/health"
+  to = "/.netlify/functions/api"
+  status = 200
+
+[[redirects]]
+  from = "/api/analytics"
+  to = "/.netlify/functions/api"
+  status = 200
+
+[[redirects]]
+  from = "/health"
+  to = "/.netlify/functions/api"
+  status = 200
+
+[[redirects]]
+  from = "/analytics"
+  to = "/.netlify/functions/api"
   status = 200
 
 [[redirects]]
@@ -32,12 +47,6 @@
 [[redirects]]
   from = "/api/gemini/*"
   to = "/.netlify/functions/api/gemini/:splat"
-  status = 200
-
-# Alternative API paths
-[[redirects]]
-  from = "/health"
-  to = "/.netlify/functions/api/health"
   status = 200
 
 # Frontend routes for static export - direct file access
