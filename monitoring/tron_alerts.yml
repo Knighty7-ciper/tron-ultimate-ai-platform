@@ -1,0 +1,141 @@
+# TRON Ultimate AI Platform - Alert Rules
+# Professional monitoring alerts for high-class AI platform
+
+groups:
+  - name: tron-ultimate-ai-platform
+    rules:
+      # System Health Alerts
+      - alert: TRONSystemOffline
+        expr: up{job="tron-ultimate-ai-backend"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: tron-ultimate-ai
+        annotations:
+          summary: "TRON Ultimate AI Platform is offline"
+          description: "TRON Ultimate AI backend service has been down for more than 1 minute"
+
+      - alert: TRONHighErrorRate
+        expr: tron_ai_error_rate > 5
+        for: 5m
+        labels:
+          severity: warning
+          service: tron-ultimate-ai
+        annotations:
+          summary: "TRON AI error rate is high"
+          description: "TRON Ultimate AI error rate is {{ $value }}% for more than 5 minutes"
+
+      - alert: TRONSystemOverloaded
+        expr: tron_ai_requests_per_minute > 1000
+        for: 2m
+        labels:
+          severity: warning
+          service: tron-ultimate-ai
+        annotations:
+          summary: "TRON AI system is overloaded"
+          description: "TRON Ultimate AI is handling {{ $value }} requests per minute"
+
+      # Performance Alerts
+      - alert: TRONSlowResponse
+        expr: tron_ai_average_response_time > 5
+        for: 3m
+        labels:
+          severity: warning
+          service: tron-ultimate-ai
+        annotations:
+          summary: "TRON AI response time is slow"
+          description: "TRON Ultimate AI average response time is {{ $value }} seconds"
+
+      - alert: TRONCriticalResponseTime
+        expr: tron_ai_average_response_time > 10
+        for: 1m
+        labels:
+          severity: critical
+          service: tron-ultimate-ai
+        annotations:
+          summary: "TRON AI response time is critical"
+          description: "TRON Ultimate AI average response time is {{ $value }} seconds - immediate attention required"
+
+      # Capability-Specific Alerts
+      - alert: TRONImageGenerationFailure
+        expr: tron_ai_capability_image_creation_usage > 100
+        for: 10m
+        labels:
+          severity: info
+          service: tron-ultimate-ai
+        annotations:
+          summary: "TRON image generation usage spike"
+          description: "TRON AI has processed {{ $value }} image generation requests"
+
+      - alert: TRONWebResearchHighUsage
+        expr: tron_ai_capability_web_research_usage > 50
+        for: 15m
+        labels:
+          severity: info
+          service: tron-ultimate-ai
+        annotations:
+          summary: "TRON web research usage spike"
+          description: "TRON AI has processed {{ $value }} web research requests"
+
+      - alert: TRONCodeExecutionHighUsage
+        expr: tron_ai_capability_code_execution_usage > 30
+        for: 15m
+        labels:
+          severity: info
+          service: tron-ultimate-ai
+        annotations:
+          summary: "TRON code execution usage spike"
+          description: "TRON AI has processed {{ $value }} code execution requests"
+
+      # Infrastructure Alerts
+      - alert: TRONHighMemoryUsage
+        expr: (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes * 100 > 80
+        for: 5m
+        labels:
+          severity: warning
+          service: tron-infrastructure
+        annotations:
+          summary: "High memory usage on TRON platform"
+          description: "Memory usage is {{ $value }}% on {{ $labels.instance }}"
+
+      - alert: TRONHighDiskUsage
+        expr: (node_filesystem_size_bytes - node_filesystem_free_bytes) / node_filesystem_size_bytes * 100 > 80
+        for: 5m
+        labels:
+          severity: warning
+          service: tron-infrastructure
+        annotations:
+          summary: "High disk usage on TRON platform"
+          description: "Disk usage is {{ $value }}% on {{ $labels.instance }}"
+
+      # Database Alerts (if applicable)
+      - alert: TRONDatabaseOffline
+        expr: up{job="postgres-exporter"} == 0
+        for: 2m
+        labels:
+          severity: critical
+          service: tron-database
+        annotations:
+          summary: "TRON database is offline"
+          description: "TRON Ultimate AI database connection has been lost for more than 2 minutes"
+
+      # Security Alerts
+      - alert: TRONUnusualRequestPattern
+        expr: increase(tron_ai_total_requests[5m]) > 1000
+        for: 2m
+        labels:
+          severity: warning
+          service: tron-security
+        annotations:
+          summary: "Unusual request pattern detected"
+          description: "TRON AI received {{ $value }} requests in the last 5 minutes - potential attack or high load"
+
+      - alert: TRONSecurityEvent
+        expr: tron_ai_error_count > 50
+        for: 1m
+        labels:
+          severity: warning
+          service: tron-security
+        annotations:
+          summary: "High error rate detected"
+          description: "TRON AI has {{ $value }} errors in the last minute - potential security issue"

@@ -1,0 +1,60 @@
+[build]
+  # Build command for Getron platform - try multiple paths
+  command = "if [ -d frontend ]; then cd frontend && npm install && npm run build; elif [ -d src ]; then npm install && npm run build; else echo 'No frontend directory found'; fi"
+  
+  # Publish directory - Next.js static export output
+  publish = "frontend/out"
+  
+  # Functions directory - primary path
+  functions = "netlify/functions"
+
+# Functions configuration for Python
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+# Build configuration
+[build.environment]
+  NODE_VERSION = "18"
+  PYTHON_VERSION = "3.11"
+
+# API routes to Netlify Functions
+[[redirects]]
+  from = "/api/health"
+  to = "/.netlify/functions/api/health"
+  status = 200
+
+[[redirects]]
+  from = "/api"
+  to = "/.netlify/functions/api"
+  status = 200
+
+[[redirects]]
+  from = "/api/gemini/*"
+  to = "/.netlify/functions/api/gemini/:splat"
+  status = 200
+
+# Alternative API paths
+[[redirects]]
+  from = "/health"
+  to = "/.netlify/functions/api/health"
+  status = 200
+
+# Frontend routes for static export - direct file access
+[[redirects]]
+  from = "/index.html"
+  to = "/index.html"
+  status = 200
+
+# Redirect root to index.html for SPA behavior
+[[redirects]]
+  from = "/"
+  to = "/index.html"
+  status = 200
+
+# Environment variables (configured in Netlify dashboard):
+# GEMINI_API_KEY=AIzaSyDynJkTlhIsQls1bgsZ3ydBMHfrda_wPPA
+# SUPABASE_URL=https://wszbkkdhlzpwjrexvyrl.supabase.co
+# SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+# SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+# JWT_SECRET_KEY=60357827208a50cdbee3754804dc11f75b30ac50cd0768fdde1e55e7d1456637

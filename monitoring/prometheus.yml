@@ -1,0 +1,58 @@
+# TRON Ultimate AI Platform - Prometheus Configuration
+# Pure class monitoring setup with professional metrics
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  - "tron_alerts.yml"
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - "alertmanager:9093"
+
+scrape_configs:
+  # TRON Ultimate AI Platform Metrics
+  - job_name: 'tron-ultimate-ai-backend'
+    static_configs:
+      - targets: ['localhost:8000']
+    scrape_interval: 10s
+    metrics_path: '/api/ultimate-ai/metrics'
+    honor_labels: true
+    
+  # TRON Ultimate AI Platform Frontend
+  - job_name: 'tron-ultimate-ai-frontend'
+    static_configs:
+      - targets: ['localhost:3000']
+    scrape_interval: 30s
+    metrics_path: '/api/metrics'
+    
+  # System Metrics
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['localhost:9100']
+    
+  # Database Metrics (if using PostgreSQL)
+  - job_name: 'postgres-exporter'
+    static_configs:
+      - targets: ['localhost:9187']
+    
+  # Redis Metrics
+  - job_name: 'redis-exporter'
+    static_configs:
+      - targets: ['localhost:9121']
+
+# Custom TRON Platform Metrics Configuration
+metric_relabel_configs:
+  - source_labels: [__name__]
+    regex: 'tron_ai_.*'
+    target_label: 'platform'
+    replacement: 'tron-ultimate-ai'
+  
+  - source_labels: [__name__]
+    regex: 'tron_ai_.*'
+    target_label: 'service'
+    replacement: 'ultimate-ai'

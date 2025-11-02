@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getron - Ultimate AI Platform</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #000;
+            color: #fff;
+            margin: 0;
+            padding: 40px;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .title {
+            font-size: 2.5em;
+            color: #ff0066;
+            margin-bottom: 20px;
+        }
+        .subtitle {
+            font-size: 1.2em;
+            color: #0099ff;
+            margin-bottom: 40px;
+        }
+        .status {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #333;
+        }
+        .btn {
+            background: #ff0066;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .btn:hover {
+            background: #cc0052;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">🚀 Getron</h1>
+        <h2 class="subtitle">Ultimate AI Platform</h2>
+        
+        <div class="status">
+            <h3>✅ Platform Status</h3>
+            <p>Getron is successfully deployed and running!</p>
+            <button class="btn" onclick="testAPI()">Test API</button>
+            <button class="btn" onclick="testHealth()">Health Check</button>
+        </div>
+        
+        <div id="result" style="margin-top: 20px; padding: 20px; background: #1a1a1a; border-radius: 5px; display: none;">
+            <h4>API Response:</h4>
+            <pre id="result-text"></pre>
+        </div>
+    </div>
+
+    <script>
+        async function testAPI() {
+            try {
+                const response = await fetch('/api');
+                const data = await response.json();
+                showResult(data);
+            } catch (error) {
+                showResult({error: error.message});
+            }
+        }
+
+        async function testHealth() {
+            try {
+                const response = await fetch('/api/health');
+                const data = await response.json();
+                showResult(data);
+            } catch (error) {
+                showResult({error: error.message});
+            }
+        }
+
+        function showResult(data) {
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('result-text').textContent = JSON.stringify(data, null, 2);
+        }
+    </script>
+</body>
+</html>

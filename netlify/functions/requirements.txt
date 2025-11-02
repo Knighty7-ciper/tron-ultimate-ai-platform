@@ -1,0 +1,15 @@
+# Python dependencies for Getron Netlify Functions
+# Install via Netlify dashboard or requirements.txt in functions directory
+
+# Google AI/Gemini integration
+google-generativeai>=0.3.0
+
+# Supabase Python client
+supabase>=2.3.0
+
+# Core Python libraries (usually available in Netlify runtime)
+requests>=2.31.0
+json>=1.0.0
+os>=1.0.0
+sys>=1.0.0
+datetime>=1.0.0
